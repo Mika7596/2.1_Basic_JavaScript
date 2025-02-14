@@ -50,7 +50,7 @@ numPositiu(-2);
 numPositiu(0)
 // Operador ternari amb funcions: Crea una funció trobarMaxim que accepti tres paràmetres (a, b, c) i utilitzi l'operador ternari per determinar el valor màxim.
 const trobarMaxim = (a, b, c) => {
-    a > b && a > c ? console.log (`${a} és el nombre major`) :  b < a && b < c ? console.log (`${b} és el nombre major`) : console.log (`${c} és el nombre major.`)
+    a > b && a > c ? console.log (`${a} és el nombre major`) :  b > a && b > c ? console.log (`${b} és el nombre major`) : console.log (`${c} és el nombre major.`)
 }
 trobarMaxim(2, 3, 4);
 
@@ -112,11 +112,11 @@ let charChain = "Hola, com va?"
 let newChain = "";
 function processarCadena(callback, cadena){
     newChain = cadena.toUpperCase()
-    console.log(newChain)
-    callback(cadena);
+    console.log(`L'input original ${cadena}`)
+    callback(newChain);
 }
 function originalChain(cadena) {
-    console.log(`L'input original abans de toUpperCase() era '${cadena}'`)
+    console.log(`L'input després de toUpperCase() és '${newChain}'`)
 }
 processarCadena(originalChain, charChain);
 
@@ -131,8 +131,8 @@ console.log (array3);
 // Exercici 2: Operador Rest en Funcions: Crea una funció 'suma' que utilitzi l'operador rest per a acceptar un nombre indeterminat d'arguments i retornar la seva suma.
 let suma = 0;
 function sumar(...numbers){
-    numbers.forEach (n => suma +=n);
-    console.log(`La suma de tots els números és igual a ${suma}`);
+    numbers.forEach (n => suma += n);
+    console.log(`La suma de tots els números rebuts és igual a ${suma}`);
 }
 sumar(1, 2, 3);
 
@@ -152,7 +152,7 @@ console.log(alumne);
 console.log(copiaAlumne);
 
 // Exercici 4: Rest en Destructuring: Crea una array amb diversos elements. Utilitza destructuring i l'operador rest per a assignar els primers dos elements a variables, i després assignar la resta dels elements a una tercera variable.
-const nouArray = [1, 2, 3, "hola", 8, {alumne: "Joan", edat: 43}];
+const nouArray = [null, 2, 3, "hola", 8, {alumne: "Joan", edat: 43}];
 let [primerElement, segonElement, ...resta] = nouArray;
 console.log(primerElement);
 console.log(segonElement);
@@ -171,12 +171,12 @@ const estudiant = {
     projectes: 3,
     especialitzacio: "React"
 }
-const fav = {
+const favs = {
     equipPreferit: "Barça",
     colorPreferit: "lila",
     destíPreferit: "Islàndia"
 }
-const personaEx6 = {...estudiant, ...fav};
+const personaEx6 = {...estudiant, ...favs};
 console.log(personaEx6);
 
 
@@ -253,7 +253,7 @@ for (const element in obj) {
 // Exercici 5: for-of amb break: Teniu una array de números. Utilitza un bucle for-of per a imprimir a la consola els números fins a trobar el número 5, llavors atura el bucle: let numeros = [1, 2, 3, 4, 5, 6];
 const numerosEx5 = [1, 2, 3, 4, 5, 6];
 for (let n of numerosEx5){
-    if ( n == 5){ break }
+    if ( n > 5){ break }
     console.log(n);
 }
 
@@ -263,3 +263,81 @@ for (let n of nomsEx6){
     console.log(`${n}; el seu index és ${nomsEx6.indexOf(n)}`)
 }
 
+                        // Exercici 1.7: Promises & Async/Await
+// Exercici 1: Creació d'una Promesa: Crea una promesa que es resolgui després de 2 segons i que retorni la cadena de text 'Hola, món'.
+const greetEx1 = new Promise(() => {
+    setTimeout(() => {
+      console.log("Hola, món!");
+    }, 2000);
+});
+
+// Exercici 2: Utilització d'una Promesa: Utilitza la promesa creada en l'exercici anterior. Crea un .then que imprimeixi el resultat a la consola.
+const greetEx2 = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Hola de nou!");
+    }, 2000);
+});
+greetEx2.then(valor => console.log(valor))
+
+// Exercici 3: Promesa amb reject: Crea una promesa que es resolgui després de 2 segons si l'input és igual a 'Hola', i que la rebutgi si l'input és qualsevol altra cosa
+
+function promesaEx3 (input){
+    return new Promise ((resolve, reject) =>{
+        if (input.toLowerCase() == "hola"){
+        setTimeout(() => {
+            resolve();
+        }, 2000)
+        } else{
+            reject();
+        }
+    })
+}
+promesaEx3("hola").then( () => {
+    console.log("Bingo! 'Hola' era la paraula correcta")},
+    () => {
+        console.log("Paraula incorrecta.");})
+   
+// Exercici 4: Ús de async/await: Escriu una funció asíncrona que utilitzi la funció await per a esperar el resultat de la promesa creada a l'exercici 1, i que després imprimeixi aquest resultat a la consola.
+const greetEx4 = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Hola, Exercici 4!");
+    }, 2000);
+});
+async function asyncF (){
+    const greeting = await greetEx4;
+    console.log (greeting)
+};
+asyncF();
+
+// Exercici 5: Gestió d'errors amb async/await: Modifica la funció de l'exercici 4 per a que capturi qualsevol possible error utilitzant un bloc try/catch.
+const greetEx5 = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Hola, Exercici 5!");
+    }, 2000);
+});
+async function catchingErrors() {
+    try{
+        const newAwait = await greetEx5;
+        console.log (greeting);
+    } catch(error){
+        console.log(`Quelcom va malement: ${error}`)
+    }
+}
+
+// Exercici 6: Promise.all: Crea dues promeses que es resolguin després de 2 i 3 segons, respectivament. Utilitza Promise.all per a esperar que ambdues promeses es resolguin, i imprimeix els resultats a la consola.
+
+const promise1Ex6 = new Promise((resolve) =>{
+    setTimeout(() => {
+        resolve("resultat de la 1ª promise de l'exercici 6 amb 2 segons de retard");
+    }, 2000)
+})
+const promise2Ex6 = new Promise ((resolve) =>{
+    setTimeout( () => {
+        resolve("resultat de la 2ª promise de l'exercici 6 amb 6 segons de retard");
+    }, 3000)
+})
+Promise.all([promise1Ex6, promise2Ex6]).then((messages) =>{
+    for (let m of messages){
+    console.log(m);
+    }
+})
