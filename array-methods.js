@@ -28,7 +28,7 @@ console.log(total);
 // - La funció ha de retornar el resultat de la suma.
 const arrEx5 = [1, 3, 7, 10 ,15, 17, 11, 5, 8, 12, 9];
 function multiplicaISuma(){
-    console.log(arrEx5.filter(n => n=> 10).map(n => n * 2).reduce( (n, m) => n + m));
+    console.log(arrEx5.filter(n => n>= 10).map(n => n * 2).reduce( (n, m) => n + m, 0));
 }
 multiplicaISuma();
 

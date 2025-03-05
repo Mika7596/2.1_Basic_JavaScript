@@ -28,7 +28,7 @@ calculadora(displayNums, 2, -7);
 
 // Exercici 3: Ús de callbacks en funcions asíncrones: Escriu una funció esperarISaludar que accepti dos paràmetres: un nom i una funció de callback. La funció ha d'esperar 2 segons i llavors invocar la funció de callback, passant el nom com a paràmetre.
 function esperarISaludar(callback, nom){
-    setTimeout(console.log(`Hola, ${nom}!`), 2000);
+    setTimeout(() => console.log(`Hola, ${nom}!`), 2000);
     callback(nom);
 }
 function despedir(nom){
